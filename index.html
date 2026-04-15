@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astrion OS — The AI-Native Operating System</title>
+  <meta name="description" content="Astrion OS is a real operating system built for humans and AI to work together. 76+ apps, smart search, dual-process AI brain. Free and open source.">
+  <meta property="og:title" content="Astrion OS — The AI-Native Operating System">
+  <meta property="og:description" content="76+ apps, smart search, dual-process AI brain. Built by a 12-year-old.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/viraajbindra-a11y/Astrion-OS/main/assets/wallpapers/astrion-brain.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06060f;
+      --surface: #0d0d1a;
+      --card: #111122;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.15);
+      --text: #e2e8f0;
+      --text-dim: #64748b;
+      --radius: 16px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(6, 6, 15, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 18px; text-decoration: none; color: white;
+    }
+    .nav-logo span { font-size: 22px; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a {
+      color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: white; }
+    .nav-cta {
+      padding: 8px 20px; border-radius: 10px; background: var(--accent); color: white !important;
+      font-weight: 600 !important; transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px var(--accent-glow); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;
+      background: var(--accent-glow); color: var(--accent); border: 1px solid rgba(59,130,246,0.2);
+      margin-bottom: 24px; animation: fadeUp 0.6s ease;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 72px); font-weight: 900; line-height: 1.1;
+      max-width: 800px; margin-bottom: 20px; animation: fadeUp 0.6s ease 0.1s both;
+    }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--accent), #a855f7, #ec4899);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 18px; color: var(--text-dim); max-width: 560px; line-height: 1.7;
+      margin-bottom: 36px; animation: fadeUp 0.6s ease 0.2s both;
+    }
+    .hero-buttons {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+    .btn {
+      padding: 14px 28px; border-radius: 12px; font-size: 15px; font-weight: 600;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: white;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06); color: white;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    .hero-screenshot {
+      margin-top: 60px; max-width: 900px; width: 100%; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06); overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+    .hero-screenshot img { width: 100%; display: block; }
+
+    /* ── Stats ── */
+    .stats {
+      display: flex; justify-content: center; gap: 48px; padding: 60px 24px;
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 42px; font-weight: 900; color: white; }
+    .stat-num .plus { color: var(--accent); }
+    .stat-label { font-size: 14px; color: var(--text-dim); margin-top: 4px; }
+
+    /* ── Section ── */
+    section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .section-desc {
+      font-size: 16px; color: var(--text-dim); max-width: 600px; line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ── Features Grid ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      padding: 28px; border-radius: var(--radius); background: var(--card);
+      border: 1px solid rgba(255,255,255,0.04); transition: transform 0.2s, border-color 0.2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.2); }
+    .feature-icon { font-size: 32px; margin-bottom: 14px; }
+    .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ── Apps Showcase ── */
+    .apps-showcase {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    }
+    .app-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 10px; background: var(--card);
+      border: 1px solid rgba(255,255,255,0.04); font-size: 13px; font-weight: 500;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .app-chip:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-2px); }
+    .app-chip .app-emoji { font-size: 16px; }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      text-align: center; padding: 100px 24px;
+      background: linear-gradient(180deg, transparent, var(--accent-glow), transparent);
+    }
+    .cta-section h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin-bottom: 16px; }
+    .cta-section p { color: var(--text-dim); font-size: 16px; margin-bottom: 32px; max-width: 500px; margin-inline: auto; }
+
+    /* ── Download Cards ── */
+    .download-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px; max-width: 900px; margin: 0 auto;
+    }
+    .download-card {
+      padding: 28px; border-radius: var(--radius); background: var(--card);
+      border: 1px solid rgba(255,255,255,0.04); text-align: center;
+      transition: transform 0.2s, border-color 0.2s; text-decoration: none; color: white;
+    }
+    .download-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.2); }
+    .download-card .dl-icon { font-size: 36px; margin-bottom: 12px; }
+    .download-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .download-card p { font-size: 13px; color: var(--text-dim); }
+
+    /* ── Built By ── */
+    .built-by {
+      text-align: center; padding: 60px 24px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .built-by p { color: var(--text-dim); font-size: 14px; line-height: 1.7; max-width: 500px; margin: 0 auto; }
+    .built-by .name { color: white; font-weight: 700; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: var(--text-dim); font-size: 12px;
+    }
+    footer a { color: var(--text-dim); text-decoration: none; }
+    footer a:hover { color: white; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .stats { gap: 24px; }
+      .stat-num { font-size: 32px; }
+      section { padding: 60px 16px; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <span>🌌</span> Astrion OS
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#apps">Apps</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/viraajbindra-a11y/Astrion-OS" target="_blank">GitHub</a>
+      <a href="https://viraajbindra-a11y.github.io/Astrion-OS/" target="_blank" class="nav-cta">Try Online</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">v0.2 &mdash; 76+ Apps, AI-Native, Open Source</div>
+    <h1>The OS built for <span class="gradient">humans and AI</span> to work together</h1>
+    <p>Astrion OS is a real operating system with 76+ apps, smart search with 40+ instant answers, a dual-process AI brain, and real window management. Free, open source, built from scratch.</p>
+    <div class="hero-buttons">
+      <a href="https://viraajbindra-a11y.github.io/Astrion-OS/" target="_blank" class="btn btn-primary">
+        Try in Browser
+      </a>
+      <a href="https://github.com/viraajbindra-a11y/Astrion-OS/releases" target="_blank" class="btn btn-secondary">
+        Download ISO
+      </a>
+      <a href="https://github.com/viraajbindra-a11y/Astrion-OS" target="_blank" class="btn btn-secondary">
+        View Source
+      </a>
+    </div>
+    <div class="hero-screenshot">
+      <img src="https://raw.githubusercontent.com/viraajbindra-a11y/Astrion-OS/main/assets/wallpapers/astrion-brain.jpg"
+           alt="Astrion OS Desktop"
+           style="width:100%;aspect-ratio:16/10;object-fit:cover;">
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">76<span class="plus">+</span></div>
+      <div class="stat-label">Built-in Apps</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Frameworks Used</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">40<span class="plus">+</span></div>
+      <div class="stat-label">Smart Answers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100<span class="plus">%</span></div>
+      <div class="stat-label">Open Source</div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="section-label">Features</div>
+    <div class="section-title">Everything you need, nothing you don't</div>
+    <div class="section-desc">No frameworks, no bloat. Pure vanilla JavaScript, a native C/GTK3 shell, and an AI brain that actually helps.</div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Smart Spotlight Search</h3>
+        <p>Type anything. Unit conversions, time zones, morse code, tip calculator, color previews, dice rolls &mdash; 40+ instant answers with zero latency, no API key needed.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>Dual-Process AI Brain</h3>
+        <p>A fast local brain (Ollama) handles easy stuff instantly. A big brain (Claude API) only wakes up when the little one isn't sure. Gets smarter over time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🪟</div>
+        <h3>Real Window Management</h3>
+        <p>Drag, snap, pin-on-top, mini-mode PiP, corner quadrants, grid tiling, cascade. Works like a real desktop, because it is one.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>Multi-Tab Browser</h3>
+        <p>Chromium on the ISO. In web mode, a full proxy-backed browser with tabs, bookmarks, history, and keyboard shortcuts (Ctrl+T, Ctrl+W, Ctrl+Tab).</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Intent Kernel</h3>
+        <p>Tell Astrion what you want, not what to do. "Create a folder called Projects and put a file in it" &mdash; the OS figures out the steps and runs them.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Safety by Design</h3>
+        <p>4 capability tiers. AI can never promote itself. Dangerous actions preview before executing. Provenance on every artifact. Socratic prompts keep you thinking.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <h3>Games & Fun</h3>
+        <p>Wordle, Sudoku, Chess, Snake, 2048, Tetris, Minesweeper, Reaction Test &mdash; plus a soundboard, emoji kitchen, and pixel art editor.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Customizable Everything</h3>
+        <p>Accent colors, wallpapers, dock visibility, night shift, focus mode. Your OS, your rules.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💻</div>
+        <h3>Native C/GTK3 Shell</h3>
+        <p>The desktop shell is written in C. Panel, dock, window manager &mdash; all native. Ctrl+R does nothing. No browser chrome leaking through.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Apps -->
+  <section id="apps">
+    <div class="section-label">76+ Apps</div>
+    <div class="section-title">Every app you can think of</div>
+    <div class="section-desc">All built from scratch. No dependencies, no npm install, no build step. Pure vanilla JS.</div>
+
+    <div class="apps-showcase">
+      <div class="app-chip"><span class="app-emoji">📁</span> Finder</div>
+      <div class="app-chip"><span class="app-emoji">🌐</span> Browser</div>
+      <div class="app-chip"><span class="app-emoji">📝</span> Notes</div>
+      <div class="app-chip"><span class="app-emoji">💬</span> Messages</div>
+      <div class="app-chip"><span class="app-emoji">🖥️</span> Terminal</div>
+      <div class="app-chip"><span class="app-emoji">🎵</span> Music</div>
+      <div class="app-chip"><span class="app-emoji">📸</span> Photos</div>
+      <div class="app-chip"><span class="app-emoji">📅</span> Calendar</div>
+      <div class="app-chip"><span class="app-emoji">🧮</span> Calculator</div>
+      <div class="app-chip"><span class="app-emoji">⏰</span> Clock</div>
+      <div class="app-chip"><span class="app-emoji">🌤️</span> Weather</div>
+      <div class="app-chip"><span class="app-emoji">🗺️</span> Maps</div>
+      <div class="app-chip"><span class="app-emoji">🎨</span> Draw</div>
+      <div class="app-chip"><span class="app-emoji">📋</span> Kanban</div>
+      <div class="app-chip"><span class="app-emoji">🔐</span> Vault</div>
+      <div class="app-chip"><span class="app-emoji">♟️</span> Chess</div>
+      <div class="app-chip"><span class="app-emoji">🐍</span> Snake</div>
+      <div class="app-chip"><span class="app-emoji">🟩</span> Wordle</div>
+      <div class="app-chip"><span class="app-emoji">🔢</span> Sudoku</div>
+      <div class="app-chip"><span class="app-emoji">🧩</span> 2048</div>
+      <div class="app-chip"><span class="app-emoji">💣</span> Minesweeper</div>
+      <div class="app-chip"><span class="app-emoji">🧱</span> Tetris</div>
+      <div class="app-chip"><span class="app-emoji">🎬</span> Video Editor</div>
+      <div class="app-chip"><span class="app-emoji">🎹</span> Beat Studio</div>
+      <div class="app-chip"><span class="app-emoji">🧘</span> Meditation</div>
+      <div class="app-chip"><span class="app-emoji">🔊</span> Soundboard</div>
+      <div class="app-chip"><span class="app-emoji">⏳</span> Countdown</div>
+      <div class="app-chip"><span class="app-emoji">🍳</span> Recipe Book</div>
+      <div class="app-chip"><span class="app-emoji">🧪</span> Emoji Kitchen</div>
+      <div class="app-chip"><span class="app-emoji">⚡</span> Speed Test</div>
+      <div class="app-chip"><span class="app-emoji">🎨</span> Color Palette</div>
+      <div class="app-chip"><span class="app-emoji">📊</span> Budget</div>
+      <div class="app-chip"><span class="app-emoji">📖</span> Dictionary</div>
+      <div class="app-chip"><span class="app-emoji">🌙</span> Matrix Rain</div>
+      <div class="app-chip"><span class="app-emoji">🎯</span> Reaction Test</div>
+      <div class="app-chip" style="background:var(--accent-glow);border-color:rgba(59,130,246,0.2);color:var(--accent);">+40 more</div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="cta-section" id="download">
+    <h2>Try Astrion OS</h2>
+    <p>No install required. Run it in your browser, boot it from USB, or clone the source and hack on it.</p>
+    <div class="download-grid">
+      <a href="https://viraajbindra-a11y.github.io/Astrion-OS/" target="_blank" class="download-card">
+        <div class="dl-icon">🌐</div>
+        <h3>Try Online</h3>
+        <p>Run the full OS in your browser. No download needed.</p>
+      </a>
+      <a href="https://github.com/viraajbindra-a11y/Astrion-OS/releases" target="_blank" class="download-card">
+        <div class="dl-icon">💿</div>
+        <h3>Download ISO</h3>
+        <p>Boot from USB on real hardware. Debian-based, ~1.9 GB.</p>
+      </a>
+      <a href="https://github.com/viraajbindra-a11y/Astrion-OS" target="_blank" class="download-card">
+        <div class="dl-icon">🛠️</div>
+        <h3>Clone Source</h3>
+        <p>100% open source. Fork it, hack it, make it yours.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Built By -->
+  <div class="built-by">
+    <p>Built from scratch by <span class="name">Viraaj</span>, a 12-year-old developer.<br>
+    Pure vanilla JavaScript. Zero frameworks. One vision:<br>
+    <em>the right shape for a human and a super-smart AI to work together.</em></p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      <a href="https://github.com/viraajbindra-a11y/Astrion-OS">GitHub</a> &nbsp;·&nbsp;
+      <a href="https://github.com/viraajbindra-a11y/Astrion-OS/releases">Releases</a> &nbsp;·&nbsp;
+      <a href="https://viraajbindra-a11y.github.io/Astrion-OS/">Try Online</a>
+    </p>
+    <p style="margin-top:8px;">Astrion OS &copy; 2026</p>
+  </footer>
+
+</body>
+</html>
